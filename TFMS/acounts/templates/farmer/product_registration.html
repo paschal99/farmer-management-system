@@ -1,0 +1,145 @@
+{% extends 'farmer/farmerdashboard.html' %}
+{% block content %}
+    <div style="margin-top: 20px;" class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg" style="border-radius: 7px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header text-center text-dark" style="border-radius: 7px 15px 0 0;">
+                        <h4 class="mb-0">Register Your Product</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="productForm" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+<!--                                        <label for="product_name" class="font-weight-bold">Name:</label>-->
+                                        <input type="text" class="form-control custom-shadow" id="product_name" name="name" placeholder="Enter product name">
+                                        <div class="invalid-feedback" id="nameError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+<!--                                        <label for="product_description" class="font-weight-bold">Description:</label>-->
+                                        <textarea class="form-control custom-shadow" id="product_description" name="description" rows="2" maxlength="150" placeholder="Enter product description (max 150 characters)"></textarea>
+                                        <div class="invalid-feedback" id="descriptionError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+<!--                                        <label for="quantity_available" class="font-weight-bold">Quantity Available:</label>-->
+                                        <input type="number" class="form-control custom-shadow" id="quantity_available" name="quantity_available" placeholder="Enter quantity available">
+                                        <div class="invalid-feedback" id="quantityError"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+<!--                                        <label for="price_per_unit" class="font-weight-bold">Price Per Unit:</label>-->
+                                        <input type="number" class="form-control custom-shadow" id="price_per_unit" name="price_per_unit" placeholder="Enter price per unit">
+                                        <div class="invalid-feedback" id="priceError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="product_image" class="font-weight-bold">Product Image:</label>
+                                <input type="file" class="form-control-file" id="product_image" name="image">
+                                <div class="invalid-feedback" id="imageError"></div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-custom btn-block">Register Product</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            let valid = true;
+
+            const name = document.getElementById('product_name');
+            const description = document.getElementById('product_description');
+            const quantity = document.getElementById('quantity_available');
+            const price = document.getElementById('price_per_unit');
+            const image = document.getElementById('product_image');
+
+            // Clear previous errors
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('descriptionError').textContent = '';
+            document.getElementById('quantityError').textContent = '';
+            document.getElementById('priceError').textContent = '';
+            document.getElementById('imageError').textContent = '';
+
+            if (name.value.trim() === '') {
+                valid = false;
+                name.classList.add('is-invalid');
+                document.getElementById('nameError').textContent = 'Name is required.';
+            } else {
+                name.classList.remove('is-invalid');
+            }
+
+            if (description.value.trim() === '') {
+                valid = false;
+                description.classList.add('is-invalid');
+                document.getElementById('descriptionError').textContent = 'Description is required.';
+            } else {
+                description.classList.remove('is-invalid');
+            }
+
+            if (quantity.value.trim() === '' || quantity.value <= 0) {
+                valid = false;
+                quantity.classList.add('is-invalid');
+                document.getElementById('quantityError').textContent = 'Quantity must be greater than 0.';
+            } else {
+                quantity.classList.remove('is-invalid');
+            }
+
+            if (price.value.trim() === '' || price.value <= 0) {
+                valid = false;
+                price.classList.add('is-invalid');
+                document.getElementById('priceError').textContent = 'Price must be greater than 0.';
+            } else {
+                price.classList.remove('is-invalid');
+            }
+
+            if (image.files.length === 0) {
+                valid = false;
+                image.classList.add('is-invalid');
+                document.getElementById('imageError').textContent = 'Image is required.';
+            } else {
+                image.classList.remove('is-invalid');
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+    <style>
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .custom-shadow {
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .form-control::placeholder {
+            color: green;
+        }
+    </style>
+{% endblock %}

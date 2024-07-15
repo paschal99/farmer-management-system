@@ -1,0 +1,110 @@
+{% extends 'buyer/buyerdashboard.html' %}
+
+{% block content %}
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Product</title>
+        <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+     <style>
+        .modal-dialog {
+            margin-top: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-center text-light">Buy Product</h3>
+                </div>
+                <div class="card-body">
+                    <div class="modal-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Product Name:</strong></td>
+                                    <td>{{ product.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Price per Unit:</strong></td>
+                                    <td>${{ product.price_per_unit }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Available Quantity:</strong></td>
+                                    <td>{{ product.quantity_available }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Amount to Pay:</strong></td>
+                                    <td>${{ total_amount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-message" role="alert">
+                                <span class="close-button" onclick="this.parentElement.style.display='none';">&times;</span>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <form id="buy-form" method="post" action="{% url 'buy_product' product_id=product.id %}">
+                        {% csrf_token %}
+
+                    </form>
+                </div>
+            </div>
+            <center><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width: 500px">Buy</button></center>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to buy {{ product.name }}?</p>
+                <p>Price: Tsh{{ product.price_per_unit }}</p>
+                <p>Available Quantity: {{ product.quantity_available }}</p>
+                <p>Total Amount to Pay: Tsh{{ total_amount }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <center><button id="confirm-btn" type="submit" class="btn btn-primary">Confirm</button></center>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#confirm-btn").click(function() {
+            $("#buy-form").submit();
+        });
+    });
+</script>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap.js' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap.min.js' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .card {
+            margin: 50px auto;
+            width: 50%;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-edit {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 200px; /* Max width for button */
+        }
+        .btn-edit i {
+            margin-right: 5px;
+        }
+        /* Adjust label width to match button width */
+        .form-group label {
+            width: 100%; /* Full width */
+            max-width: 200px; /* Max width same as button */
+            display: inline-block; /* Display inline with padding */
+            margin-bottom: 5px; /* Add some space between label and input */
+        }
+    </style>
+</head>
+<body>
+<!-- Page Container -->
+<div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed">
+    <!-- Content -->
+    <div class="content">
+        <!-- Card -->
+        <div class="card">
+            <div class="card-header bg-success text-lg-center">
+                <h2 style="color: white">UPDATE PROFILE INFORMATION</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <h3>User Information</h3>
+                        <form method="POST" action="{% url 'farmer_details' %}" class="text-center">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ form.first_name.label_tag }}<br>
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ form.last_name.label_tag }}<br>
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ form.username.label_tag }}<br>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ form.email.label_tag }}<br>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-edit">
+                                <i class="fas fa-pencil-alt"></i> Edit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <h3>Profile Information</h3>
+                        <form method="POST" action="{% url 'farmer_details' %}" class="text-center">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ former.phone.label_tag }}<br>
+                                    {{ former.phone }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ former.sex.label_tag }}<br>
+                                    {{ former.sex }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ former.location.label_tag }}<br>
+                                    {{ former.location }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-edit ">
+                                <i class="fas fa-pencil-alt"></i> Edit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Card -->
+    </div>
+    <!-- End Content -->
+</div>
+<!-- End Page Container -->
+</body>
+</html>

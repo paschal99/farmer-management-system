@@ -1,0 +1,81 @@
+<!--{% extends 'farmer/farmerdashboard.html' %}-->
+
+<!--{% block content %}-->
+<!--    <div class="container mt-5">-->
+<!--        <h2 class="text-dark text-center">Messages</h2>-->
+<!--        <div class="chat-container mx-auto">-->
+<!--            {% for message in received_messages %}-->
+<!--                <div class="message received">-->
+<!--                    <p>{{ message.content }}</p>-->
+<!--                    <span class="time">{{ message.date_sent|date:"H:i" }}</span>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--            {% for message in sent_messages %}-->
+<!--                <div class="message sent">-->
+<!--                    <p>{{ message.content }}</p>-->
+<!--                    <span class="time">{{ message.date_sent|date:"H:i" }}</span>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--            <form method="post" class="send-message-form mt-4">-->
+<!--                {% csrf_token %}-->
+<!--                <div class="form-group">-->
+<!--                    <textarea class="form-control" name="content" rows="3" placeholder="Type your message here..."></textarea>-->
+<!--                </div>-->
+<!--                <input type="hidden" name="receiver_id" value="{{ default_buyer.id }}">-->
+<!--                <button type="submit" class="btn btn-primary">Send</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <style>-->
+<!--        .chat-container {-->
+<!--            background-color: #f9f9f9;-->
+<!--            border: 1px solid #ddd;-->
+<!--            border-radius: 10px;-->
+<!--            padding: 20px;-->
+<!--            max-width: 800px;-->
+<!--            margin: auto;-->
+<!--            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .message {-->
+<!--            margin-bottom: 15px;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 10px;-->
+<!--            position: relative;-->
+<!--            max-width: 75%;-->
+<!--        }-->
+<!--        .message p {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        .message.sent {-->
+<!--            background-color: #d4edda;-->
+<!--            align-self: flex-end;-->
+<!--            margin-left: auto;-->
+<!--            text-align: right;-->
+<!--        }-->
+<!--        .message.received {-->
+<!--            background-color: #f8d7da;-->
+<!--            align-self: flex-start;-->
+<!--            margin-right: auto;-->
+<!--        }-->
+<!--        .message .time {-->
+<!--            display: block;-->
+<!--            font-size: 0.8em;-->
+<!--            color: #555;-->
+<!--            margin-top: 5px;-->
+<!--        }-->
+<!--        .send-message-form {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        .send-message-form textarea {-->
+<!--            flex: 1;-->
+<!--            margin-right: 10px;-->
+<!--            resize: none;-->
+<!--        }-->
+<!--        .send-message-form button {-->
+<!--            flex: 0;-->
+<!--        }-->
+<!--    </style>-->
+<!--{% endblock %}-->

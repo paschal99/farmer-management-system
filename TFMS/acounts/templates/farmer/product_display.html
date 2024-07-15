@@ -1,0 +1,114 @@
+<!-- farmer/product_display.html -->
+{% extends 'farmer/farmerdashboard.html' %}
+
+{% block content %}
+<div class="container mt-4 shadow p-3 mb-5 bg-body rounded">
+    <div class="header text-center">
+        <h2 class="fw-bold mb-4" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:25px; color:black">My Products</h2>
+    </div>
+    <div class="table-responsive">
+        <table id="productsTable" class="table table-striped">
+            <thead class="text-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Available Quantity</th>
+                    <th>Price Per Unit</th>
+                    <th>Status</th>
+                    <th>Delivered</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td class="text-center">{{ product.quantity_available }}</td>
+                        <td class="text-center">${{ product.price_per_unit }}</td>
+                        <td>{{ product.payment_status }}</td>
+                        <td class="text-center">{{ product.delivered }}</td>
+                        <td>
+    {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-thumbnail rounded-circle" alt="Product Image" style="height: 60px; width: 60px; align: center;" onclick="viewImage('{{ product.image.url }}')">
+    {% else %}
+        No Image
+    {% endif %}
+                       </td>
+                        <td>
+                            <a href="{% url 'edit_product' product.id %}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ product.id }})">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Confirmation Modal for Delete -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this product?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" id="product_id">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image View Modal -->
+<div class="modal fade" id="imageViewModal" tabindex="-1" aria-labelledby="imageViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageViewModalLabel">Product Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" id="productImage" class="img-fluid" alt="Product Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include DataTables JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        $('#productsTable').DataTable();
+    });
+
+    function confirmDelete(productId) {
+        document.getElementById('product_id').value = productId;
+        $('#confirmDeleteModal').modal('show');
+    }
+
+    // Function to view image in a modal
+    function viewImage(imageUrl) {
+        document.getElementById('productImage').src = imageUrl;
+        $('#imageViewModal').modal('show');
+    }
+</script>
+{% endblock %}

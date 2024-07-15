@@ -1,0 +1,160 @@
+{% extends 'farmer/farmerdashboard.html' %}
+
+{% block content %}
+<div class="container mt-20">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="chat-container">
+        <div class="chat-box">
+          <!-- Display received messages -->
+          {% for message in received_messages %}
+          <div class="message received">
+            <div class="message-header">
+              <span class="sender">{{ message.sender.username }}</span>
+              <span class="date">{{ message.date_sent }}</span>
+            </div>
+            <div class="message-content">{{ message.content }}</div>
+          </div>
+          {% endfor %}
+
+          <!-- Display received feedback -->
+          {% for feedback in received_feedback %}
+          <div class="message feedback received">
+            <div class="message-header">
+              <span class="sender">{{ feedback.sender.username }}</span>
+              <span class="date">{{ feedback.date_sent }}</span>
+            </div>
+            <div class="message-content">{{ feedback.content }}</div>
+          </div>
+          {% endfor %}
+
+          <!-- Display sent messages -->
+          {% for message in sent_messages %}
+          <div class="message sent">
+            <div class="message-header">
+              <span class="date">{{ message.date_sent }}</span>
+              <span class="receiver">{{ message.receiver.username }}</span>
+            </div>
+            <div class="message-content">{{ message.content }}</div>
+          </div>
+          {% endfor %}
+
+          <!-- Display sent feedback -->
+          {% for feedback in sent_feedback %}
+          <div class="message feedback sent">
+            <div class="message-header">
+              <span class="date">{{ feedback.date_sent }}</span>
+              <span class="receiver">{{ feedback.receiver.username }}</span>
+            </div>
+            <div class="message-content">{{ feedback.content }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 mt-4">
+      <div class="send-container">
+        <form method="post" action="{% url 'send_messages' %}">
+          {% csrf_token %}
+          <div class="input-group">
+            <textarea id="content" name="content" class="form-control" rows="1" required placeholder="Type a message..."></textarea>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .chat-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+
+  .chat-box {
+    max-height: 500px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .message {
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message-header {
+    font-size: 0.8em;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .message-content {
+    font-size: 1em;
+  }
+
+  .received {
+    background-color: #e1ffc7;
+    align-self: flex-start;
+  }
+
+  .sent {
+    background-color: #c7e1ff;
+    align-self: flex-end;
+    text-align: right;
+  }
+
+  .feedback {
+    background-color: #ffd1dc;
+  }
+
+  .send-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .input-group {
+    display: flex;
+    width: 100%;
+  }
+
+  .input-group textarea {
+    resize: none;
+    flex-grow: 1;
+    margin-right: 5px;
+  }
+
+  .input-group button {
+    padding: 5px 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .message {
+      max-width: 100%;
+    }
+
+    .input-group textarea {
+      margin-right: 0;
+    }
+
+    .input-group button {
+      margin-left: 5px;
+    }
+  }
+</style>
+{% endblock %}

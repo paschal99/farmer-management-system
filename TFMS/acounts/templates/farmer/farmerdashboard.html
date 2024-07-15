@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{%block title %} Dashboard {% endblock%}</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+     <style>
+        /* Card styles */
+       .card-link {
+           text-decoration: none;
+           color: inherit;
+       }
+
+       /*.card {*/
+       /*    background-color: #FFFFFF; !* White background *!*/
+       /*    color: #004085; !* Text and icon color *!*/
+       /*    transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+       /*}*/
+
+       /*.card:hover {*/
+       /*    transform: translateY(-5px);*/
+       /*    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);*/
+       /*}*/
+
+       /*!* Brighten on touch or click *!*/
+       /*.card-touch {*/
+       /*    transition: filter 0.3s ease;*/
+       /*}*/
+
+       /*.card-touch:hover,*/
+       /*.card-touch:focus {*/
+       /*    filter: brightness(115%);*/
+       /*}*/
+
+
+   </style>
+
+</head>
+
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+
+
+        <ul class="navbar-nav  sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#01222b;">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'farmer_dashboard'%}">
+
+                <div class="sidebar-brand-text mx-9">farmer-page</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'farmer_dashboard' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Farmer
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>farmer category</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">farmer category</h6>
+                        <a class="collapse-item" href="{% url 'register_product'%}">register product</a>
+                        <a class="collapse-item" href="{% url 'apply_loan'%}">apply loan</a>
+                        <a class="collapse-item" href="#"></a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>view registered product</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">view your product</h6>
+                        <a class="collapse-item" href="{% url 'display_products'%}">view your product</a>
+<!--                        <a class="collapse-item" href="#">groups-with no funds</a>-->
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'view_loans_request'%}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>your loan application</span></a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'send_messages'%}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>send buyer message</span></a>
+            </li>
+
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="{% url 'farmer_notifications'%}">-->
+<!--                    <i class="fas fa-fw fa-table"></i>-->
+<!--                    <span>view all notfication</span></a>-->
+<!--            </li>-->
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="heading text-center" style="padding: 20px;">
+                    <h4 class="text-sm" style="font-family: Arial, sans-serif; font-size: 20px; color: #000; font-weight: bold; margin: 0;">
+                        Welcome, {{user.username}}-<span style="color: blue;">{{user.profile.role}}</span>
+                    </h4>
+                    </div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+
+
+
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">NEWS</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="">
+                                      <div class="card">
+                                        <div class="card-body">
+
+                                        <div class="container mt-4">
+                                            <h6 class="mt-2 mb-4 text-center">Notifications</h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead class="thead-primary">
+                                                        <tr>
+                                                            <th scope="col">Sender</th>
+                                                            <th scope="col">Content</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for notification in notifications %}
+                                                        <tr>
+                                                            <td>{{ notification.sender.username }}</td>
+                                                            <td>{{ notification.content }}</td>
+
+                                                        </tr>
+                                                        {% empty %}
+                                                        <tr>
+                                                            <td colspan="4" class="text-center">No notifications.</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+
+
+
+
+
+
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+<!--                                <form class="form-inline mr-auto w-100 navbar-search">-->
+<!--                                    <div class="input-group">-->
+<!--                                        <input type="text" class="form-control bg-light border-0 small"-->
+<!--                                            placeholder="Search for..." aria-label="Search"-->
+<!--                                            aria-describedby="basic-addon2">-->
+<!--                                        <div class="input-group-append">-->
+<!--                                            <button class="btn btn-primary" type="button">-->
+<!--                                                <i class="fas fa-search fa-sm"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+<!--                        <li class="nav-item dropdown no-arrow mx-1">-->
+<!--                            <a class="nav-link dropdown-toggle" href="" id="alertsDropdown" role="button"-->
+<!--                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                <i class="fas fa-bell fa-fw"></i>-->
+<!--                                &lt;!&ndash; Counter - Alerts &ndash;&gt;-->
+<!--                                <span class="badge badge-danger badge-counter">{{ total_groups }}-new groups</span>-->
+<!--                            </a>-->
+<!--                            &lt;!&ndash; Dropdown - Alerts &ndash;&gt;-->
+<!--                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated&#45;&#45;grow-in"-->
+<!--                                aria-labelledby="alertsDropdown">-->
+<!--                                <h6 class="dropdown-header">-->
+<!--                                    Alerts Center-->
+<!--                                </h6>-->
+<!--                                <a class="dropdown-item d-flex align-items-center" href="#">-->
+<!--                                      <div class="card">-->
+<!--                                        <div class="card-body">-->
+<!--                                            <div class="">-->
+<!--                                                 <h4 class="header-title text-dark text-lg-center">new group</h4>-->
+<!--                                            </div>-->
+
+<!--                                            &lt;!&ndash; Group List Table &ndash;&gt;-->
+<!--                                            <div class="table-responsive">-->
+<!--                                                <table class="table table-striped text-dark">-->
+<!--                                                    <thead class="thead-primary">-->
+<!--                                                        <tr>-->
+<!--                                                            <th scope="col">Group Name</th>-->
+<!--                                                            <th scope="col">Village</th>-->
+<!--                                                            <th scope="col">Group Number</th>-->
+<!--                                                            <th scope="col">Total Members</th>-->
+
+<!--                                                        </tr>-->
+<!--                                                    </thead>-->
+<!--                                                    <tbody>-->
+<!--                                                        &lt;!&ndash; Loop through groups to display each group &ndash;&gt;-->
+<!--                                                        {% for group in groups_list %}-->
+<!--                                                        <tr>-->
+<!--                                                            <td>{{ group.name }}</td>-->
+<!--                                                            <td>{{ group.village.name }}</td>-->
+<!--                                                            <td>{{ group.group_no }}</td>-->
+<!--                                                            <td>{{ group.total_members }}</td>-->
+<!--                                                        </tr>-->
+<!--                                                        {% endfor %}-->
+<!--                                                    </tbody>-->
+<!--                                                </table>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+
+<!--                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>-->
+<!--                            </div>-->
+<!--                        </li>-->
+
+
+                        <!-- Nav Item - Messages -->
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.username}}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{% static 'img/undraw_profile.svg' %}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{% url 'update_profile'%}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="{% url 'change_password' %}">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    change-password
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+<div class="container-fluid">
+                    {% block content %}
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                        <div class="row">
+                            <!-- Bottom Row Cards -->
+
+                            <div class="col-xl-6 col-md-6 mb-4">
+                                <a href="#" class="card-link card-touch">
+                                    <div class="card border-0 shadow h-100 py-2 animate-card text-center">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col">
+                                                    <div class="text-xl font-weight-bold text-uppercase mb-1" style="color: #004085;">your balance Amount</div>
+                                                    <div class="h5 mb-0 font-weight-bold" style="font-size: 24px; color: #004085;">{{ balance }}</div>
+                                                    <i class="fas fa-dollar-sign fa-2x mt-2" style="color: #004085;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {%endblock%}
+                </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>
